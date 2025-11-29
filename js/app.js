@@ -625,19 +625,34 @@
     // ═══════════════════════════════════════════════════════════════
     
     function setupControls() {
-        const group = document.getElementById('graphGroup');
-        
         document.getElementById('zoomIn').addEventListener('click', () => {
-            transform.k = Math.min(4, transform.k * 1.3);
+            const group = document.getElementById('graphGroup');
+            const svg = document.getElementById('graphSvg');
+            const rect = svg.getBoundingClientRect();
+            const cx = rect.width / 2;
+            const cy = rect.height / 2;
+            
+            const newK = Math.min(4, transform.k * 1.3);
+            transform.x = cx - (cx - transform.x) * (newK / transform.k);
+            transform.y = cy - (cy - transform.y) * (newK / transform.k);
+            transform.k = newK;
             applyTransform(group);
         });
         
         document.getElementById('zoomOut').addEventListener('click', () => {
-            transform.k = Math.max(0.1, transform.k / 1.3);
+            const group = document.getElementById('graphGroup');
+            const svg = document.getElementById('graphSvg');
+            const rect = svg.getBoundingClientRect();
+            const cx = rect.width / 2;
+            const cy = rect.height / 2;
+            
+            const newK = Math.max(0.1, transform.k / 1.3);
+            transform.x = cx - (cx - transform.x) * (newK / transform.k);
+            transform.y = cy - (cy - transform.y) * (newK / transform.k);
+            transform.k = newK;
             applyTransform(group);
         });
         
-        document.getElementById('fitView').addEventListener('click', fitToView);
         document.getElementById('closePanel').addEventListener('click', hidePanel);
         
         document.addEventListener('keydown', e => {

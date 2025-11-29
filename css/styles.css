@@ -333,6 +333,8 @@ select:focus { outline: none; border-color: var(--accent-primary); }
     border: 1px solid var(--border-default);
     border-radius: 6px;
     overflow: hidden;
+    z-index: 10;
+    pointer-events: auto;
 }
 
 .graph-controls button {
